@@ -56,9 +56,11 @@
 	sleep(1);
         [post go];
         [sender setTitle:@"respring" forState:UIControlStateNormal];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"success" message:[NSString stringWithFormat:@"tfp0: %i\nkernel base: 0x%llx\nuid: %i\nunsandboxed: true", kernel_task_port, kernel_slide + 0xFFFFFFF007004000, getuid()] preferredStyle:UIAlertControllerStyleAlert];
-	[alert addAction:[UIAlertAction actionWithTitle:@"done" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"success" message:[NSString stringWithFormat:@"tfp0: %i\nkernel base: 0x%llx\nuid: %i\nunsandboxed: true", kernel_task_port, kernel_slide + 0xFFFFFFF007004000, getuid()] preferredStyle:UIAlertControllerStyleAlert];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"done" style:UIAlertActionStyleCancel handler:nil]];
+//        [self presentViewController:alert animated:YES completion:nil];
+        UIButton *button = (UIButton *)sender;
+        button.titleLabel.text = @"Revokes have been blocked!";
     } else {
         [self failure];
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pr1-ib-RMm">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,100 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="xah-l6-ame">
+            <objects>
+                <viewController id="pr1-ib-RMm" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oJI-ty-495">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="andre-abreu-1297925-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="KtX-fi-xRL">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5R-Am-y8Z" customClass="RoundedVisualEffectView">
+                                <rect key="frame" x="68" y="418" width="278" height="70"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kl9-bW-jxz">
+                                    <rect key="frame" x="0.0" y="0.0" width="278" height="70"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHo-9l-hqt">
+                                            <rect key="frame" x="0.0" y="0.0" width="278" height="70"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                            <state key="normal" title="Block Revokes">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="go:" destination="pr1-ib-RMm" eventType="touchUpInside" id="JiO-RE-bY8"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="LHo-9l-hqt" secondAttribute="bottom" id="McU-F5-ZpE"/>
+                                        <constraint firstAttribute="trailing" secondItem="LHo-9l-hqt" secondAttribute="trailing" id="Vvx-SU-2wL"/>
+                                        <constraint firstItem="LHo-9l-hqt" firstAttribute="leading" secondItem="kl9-bW-jxz" secondAttribute="leading" id="lQb-aQ-wGZ"/>
+                                        <constraint firstItem="LHo-9l-hqt" firstAttribute="top" secondItem="kl9-bW-jxz" secondAttribute="top" id="wcQ-3M-B1p"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="278" id="SPy-NN-cX0"/>
+                                    <constraint firstAttribute="height" constant="70" id="hcI-p8-Zun"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="rounded" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="db6-Jg-7dS">
+                                <rect key="frame" x="68" y="495.99999999999994" width="278" height="142.33333333333331"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="278" id="mXR-38-ycq"/>
+                                </constraints>
+                                <string key="text">LazarusJailed uses the voucher_swap exploit to block revokes.
+
+It uses the anti-revoke method created by Jakeashacks and Pwn20wnd.</string>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created by the jailbreaks.fun team" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="log-nC-fO2">
+                                <rect key="frame" x="70" y="841" width="274" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LazarusJailed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFT-3P-yQ1">
+                                <rect key="frame" x="97.666666666666686" y="44" width="219" height="37"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="31"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Y5R-Am-y8Z" firstAttribute="centerY" secondItem="JXO-EX-IDz" secondAttribute="centerY" id="9NT-fj-Cyi"/>
+                            <constraint firstItem="log-nC-fO2" firstAttribute="bottom" secondItem="JXO-EX-IDz" secondAttribute="bottom" id="AS0-EQ-Yaq"/>
+                            <constraint firstItem="KtX-fi-xRL" firstAttribute="top" secondItem="oJI-ty-495" secondAttribute="top" id="GGj-sQ-tUB"/>
+                            <constraint firstItem="Y5R-Am-y8Z" firstAttribute="centerX" secondItem="JXO-EX-IDz" secondAttribute="centerX" id="GYw-9T-dAF"/>
+                            <constraint firstItem="db6-Jg-7dS" firstAttribute="centerX" secondItem="JXO-EX-IDz" secondAttribute="centerX" id="KXk-E1-ajB"/>
+                            <constraint firstItem="CFT-3P-yQ1" firstAttribute="top" secondItem="JXO-EX-IDz" secondAttribute="top" id="PVR-qd-oNA"/>
+                            <constraint firstAttribute="bottom" secondItem="KtX-fi-xRL" secondAttribute="bottom" id="RKJ-t4-KgL"/>
+                            <constraint firstItem="CFT-3P-yQ1" firstAttribute="centerX" secondItem="KtX-fi-xRL" secondAttribute="centerX" id="TJw-Ni-fFc"/>
+                            <constraint firstItem="db6-Jg-7dS" firstAttribute="top" secondItem="Y5R-Am-y8Z" secondAttribute="bottom" constant="8" id="ekd-fU-543"/>
+                            <constraint firstItem="KtX-fi-xRL" firstAttribute="leading" secondItem="JXO-EX-IDz" secondAttribute="leading" id="gKH-1O-NGV"/>
+                            <constraint firstAttribute="trailing" secondItem="KtX-fi-xRL" secondAttribute="trailing" id="hNp-W3-tSt"/>
+                            <constraint firstItem="log-nC-fO2" firstAttribute="centerX" secondItem="KtX-fi-xRL" secondAttribute="centerX" id="pR1-Ac-XNI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="JXO-EX-IDz"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hGp-6H-hnX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-636.23188405797111" y="91.071428571428569"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -39,9 +133,6 @@ fork by alticha</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="go"/>
-                                <connections>
-                                    <action selector="go:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HM8-ef-WQs"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -61,4 +152,7 @@ fork by alticha</string>
             <point key="canvasLocation" x="136.80000000000001" y="91.304347826086968"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="andre-abreu-1297925-unsplash" width="2992" height="3992"/>
+    </resources>
 </document>
