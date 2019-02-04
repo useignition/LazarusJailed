@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #include "post.h"
 #import "kernel_memory.h"
 #import "kernel_slide.h"
@@ -12,8 +13,10 @@
 
 @implementation Post
 static uint64_t SANDBOX = 0;
+static UIButton *bigButton;
 
-- (bool)go {
+- (bool)go:(id)sender {
+    bigButton = (UIButton *)sender;
     if (!MACH_PORT_VALID(kernel_task_port)) {
         return false;
     }
@@ -23,7 +26,12 @@ static uint64_t SANDBOX = 0;
     if (success) printf("Success!\nUID: 0\nUnsandboxed: true\n"); // We already know we have root and that we are unsandboxed, so we don't need to check here.
     if (!success) printf("Failed\n");
     if (success) {
-        [self disableRevokes];
+        [bigButton setTitle:@"Blocking Revokes" forState:UIControlStateNormal];
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self disableRevokes];
+        });
     }
     return success;
 }

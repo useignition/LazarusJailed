@@ -7,7 +7,7 @@
 
 @interface Post : NSObject
 
-- (bool)go;
+- (bool)go:(id)sender;
 - (bool)isRoot;
 - (bool)isSandboxed;
 - (void)setUID:(uid_t)uid;

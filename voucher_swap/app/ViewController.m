@@ -14,6 +14,8 @@
 #include "post.h"
 #include <sys/utsname.h>
 
+#define DEBUG_MODE true
+
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *bigButton;
 
@@ -79,7 +81,7 @@
      }
      */
     if (progress == 2) {
-        [sender setTitle:@"Patching" forState:UIControlStateNormal];
+        [sender setTitle:@"Respringing" forState:UIControlStateNormal];
     } else if (progress == 1) {
         [sender setTitle:@"Error: Unknown" forState:UIControlStateNormal];
     } else if (progress == 0) {
@@ -102,13 +104,19 @@
         bool success = [self voucher_swap:sender];
         if (success) {
             sleep(1);
-            [post go];
+            [post go:sender];
             [sender setTitle:@"Patched (Respring Now)" forState:UIControlStateNormal];
             progress++;
         } else {
             [self failure:sender];
         }
     });
+    
+//    double delayInSeconds = 2.0;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        
+//    });
 }
 
 - (bool)isBlocked {
@@ -133,14 +141,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([self isBlocked]) {
-        [self.bigButton setTitle:@"Revokes Blocked" forState:UIControlStateNormal];
-//        self.bigButton.userInteractionEnabled = false;
-        NSLog(@"[+] Revokes Blocked");
-    } else {
-       [self.bigButton setTitle:@"Block Revokes" forState:UIControlStateNormal];
-        NSLog(@"[-] Not Blocked");
-    }
+    [self.bigButton setTitle:@"Checking if blocked" forState:UIControlStateNormal];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if ([self isBlocked]) {
+            [self.bigButton setTitle:@"Revokes Blocked" forState:UIControlStateNormal];
+            if (DEBUG_MODE) {
+                self.bigButton.userInteractionEnabled = true;
+            } else {
+                self.bigButton.userInteractionEnabled = false;
+            }
+            NSLog(@"[+] Revokes Blocked");
+        } else {
+            [self.bigButton setTitle:@"Block Revokes" forState:UIControlStateNormal];
+            NSLog(@"[-] Not Blocked");
+        }
+    });
 }
 
 @end
