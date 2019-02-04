@@ -21,9 +21,10 @@
 
 @implementation ViewController
 
-- (bool)voucher_swap {
-#define CHECK(a, b) if (a < b) { printf("non-16k devices are unsupported.\n"); return false; }
+- (bool)voucher_swap:(id)sender {
+#define CHECK(a, b) if (a < b) { printf("non-16k devices are unsupported.\n"); [sender setTitle:@"Error: 4K Device" forState:UIControlStateNormal]; return false; }
     if ([[UIDevice currentDevice].model isEqualToString:@"iPod touch"]) {
+        [sender setTitle:@"Error: Device Unsupported" forState:UIControlStateNormal];
         return false;
     }
     struct utsname u;
@@ -51,6 +52,7 @@
     voucher_swap();
     if (!MACH_PORT_VALID(kernel_task_port)) {
         printf("tfp0 is invalid?\n");
+        [sender setTitle:@"Error: TFP0 Invalid" forState:UIControlStateNormal];
         return false;
     }
     return true;
@@ -58,11 +60,12 @@
 }
 
 - (void)failure:(id)sender {
-    [sender setTitle:@"Error: Exploit"];
+//    [sender setTitle:@"Error: Exploit"];
     self.bigButton.userInteractionEnabled = false;
 }
 
 - (IBAction)go:(id)sender {
+    static int progress = 0;
     /*
      If you're running this in a method like viewDidLoad you only need the following:
      --------------------------------------------------------------------------------
@@ -75,26 +78,37 @@
      assert(false);
      }
      */
-    [sender setTitle:@"Patching"];
-    Post *post = [[Post alloc] init];
-    static int progress = 0;
     if (progress == 2) {
-        [post respring];
-        return;
-    }
-    if (progress == 1) {
-        return;
-    }
-    progress++;
-    bool success = [self voucher_swap];
-    if (success) {
-        sleep(1);
-        [post go];
-        [sender setTitle:@"Patched (Respring Now)" forState:UIControlStateNormal];
-        progress++;
+        [sender setTitle:@"Patching" forState:UIControlStateNormal];
+    } else if (progress == 1) {
+        [sender setTitle:@"Error: Unknown" forState:UIControlStateNormal];
+    } else if (progress == 0) {
+        [sender setTitle:@"Patching" forState:UIControlStateNormal];
     } else {
-        [self failure:sender];
+        [sender setTitle:@"Error: Unknown" forState:UIControlStateNormal];
     }
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        Post *post = [[Post alloc] init];
+        if (progress == 2) {
+            [post respring];
+            return;
+        }
+        if (progress == 1) {
+            return;
+        }
+        progress++;
+        bool success = [self voucher_swap:sender];
+        if (success) {
+            sleep(1);
+            [post go];
+            [sender setTitle:@"Patched (Respring Now)" forState:UIControlStateNormal];
+            progress++;
+        } else {
+            [self failure:sender];
+        }
+    });
 }
 
 - (bool)isBlocked {
@@ -121,7 +135,7 @@
     [super viewDidLoad];
     if ([self isBlocked]) {
         [self.bigButton setTitle:@"Revokes Blocked" forState:UIControlStateNormal];
-        self.bigButton.userInteractionEnabled = false;
+//        self.bigButton.userInteractionEnabled = false;
         NSLog(@"[+] Revokes Blocked");
     } else {
        [self.bigButton setTitle:@"Block Revokes" forState:UIControlStateNormal];
