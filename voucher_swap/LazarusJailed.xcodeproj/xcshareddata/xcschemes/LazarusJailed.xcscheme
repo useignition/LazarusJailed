@@ -17,7 +17,7 @@
                BlueprintIdentifier = "55F5FBE521BB2C3200F3AB28"
                BuildableName = "voucher_swap.app"
                BlueprintName = "voucher_swap"
-               ReferencedContainer = "container:voucher_swap.xcodeproj">
+               ReferencedContainer = "container:LazarusJailed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "55F5FBE521BB2C3200F3AB28"
             BuildableName = "voucher_swap.app"
             BlueprintName = "voucher_swap"
-            ReferencedContainer = "container:voucher_swap.xcodeproj">
+            ReferencedContainer = "container:LazarusJailed.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "55F5FBE521BB2C3200F3AB28"
             BuildableName = "voucher_swap.app"
             BlueprintName = "voucher_swap"
-            ReferencedContainer = "container:voucher_swap.xcodeproj">
+            ReferencedContainer = "container:LazarusJailed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "55F5FBE521BB2C3200F3AB28"
             BuildableName = "voucher_swap.app"
             BlueprintName = "voucher_swap"
-            ReferencedContainer = "container:voucher_swap.xcodeproj">
+            ReferencedContainer = "container:LazarusJailed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
