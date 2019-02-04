@@ -33,3 +33,11 @@ bool ensure_symlink(const char *to, const char *from) {
     }
     return true;
 }
+
+bool is_symlink(const char *filename) {
+    struct stat buf;
+    if (lstat(filename, &buf) != ERR_SUCCESS) {
+        return false;
+    }
+    return S_ISLNK(buf.st_mode);
+}

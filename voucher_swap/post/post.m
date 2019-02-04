@@ -11,9 +11,82 @@
 #include "parameters.h"
 
 @implementation Post
+static uint64_t SANDBOX = 0;
+
+- (bool)go {
+    if (!MACH_PORT_VALID(kernel_task_port)) {
+        return false;
+    }
+    [self root];
+    [self unsandbox];
+    bool success = [self isRoot] && [self isSandboxed];
+    if (success) printf("Success!\nUID: 0\nUnsandboxed: true\n"); // We already know we have root and that we are unsandboxed, so we don't need to check here.
+    if (!success) printf("Failed\n");
+    if (success) {
+        [self disableRevokes];
+    }
+    return success;
+}
+
+- (void)setUID:(uid_t)uid {
+    uint64_t proc = [self selfproc];
+    uint64_t ucred = kernel_read64(proc + off_p_ucred);
+    kernel_write32(proc + off_p_uid, uid);
+    kernel_write32(proc + off_p_ruid, uid);
+    kernel_write32(ucred + off_ucred_cr_uid, uid);
+    kernel_write32(ucred + off_ucred_cr_ruid, uid);
+    kernel_write32(ucred + off_ucred_cr_svuid, uid);
+}
+
+- (void)setGID:(gid_t)gid {
+    uint64_t proc = [self selfproc];
+    uint64_t ucred = kernel_read64(proc + off_p_ucred);
+    kernel_write32(proc + off_p_gid, gid);
+    kernel_write32(proc + off_p_rgid, gid);
+    kernel_write32(ucred + off_ucred_cr_rgid, gid);
+    kernel_write32(ucred + off_ucred_cr_svgid, gid);
+}
+
+- (void)root {
+    [self setUID:0];
+    [self setGID:0];
+}
+
+- (void)mobile {
+    [self setUID:501];
+    [self setGID:501];
+}
+
+- (void)unsandbox {
+    uint64_t proc = [self selfproc];
+    uint64_t ucred = kernel_read64(proc + off_p_ucred);
+    uint64_t cr_label = kernel_read64(ucred + off_ucred_cr_label);
+    if (SANDBOX == 0) SANDBOX = kernel_read64(cr_label + off_sandbox_slot);
+    kernel_write64(cr_label + off_sandbox_slot, 0);
+}
+
+- (void)sandbox {
+    uint64_t proc = [self selfproc];
+    uint64_t ucred = kernel_read64(proc + off_p_ucred);
+    uint64_t cr_label = kernel_read64(ucred + off_ucred_cr_label);
+    kernel_write64(cr_label + off_sandbox_slot, SANDBOX);
+    SANDBOX = 0;
+}
+
+- (bool)isRoot {
+    return !getuid();
+}
+
+- (bool)isSandboxed {
+    return kernel_read64(kernel_read64(kernel_read64([self selfproc] + off_p_ucred) + off_ucred_cr_label) + off_sandbox_slot) == 0 ? true : false;
+}
 
 - (uint64_t)selfproc {
     return kernel_read64(current_task + OFFSET(task, bsd_info));
+}
+
+- (uint64_t)kernproc {
+    return kernel_read64(kernel_task + OFFSET(task, bsd_info));
 }
 
 - (int)name_to_pid:(NSString *)name {
@@ -41,6 +114,9 @@
         char *buffer = (char *)malloc(length);
         if (sysctl((int[]){ CTL_KERN, KERN_PROCARGS2, pid }, 3, buffer, &size, NULL, 0) == 0) {
             NSString *executable = [NSString stringWithCString:(buffer+sizeof(int)) encoding:NSUTF8StringEncoding];
+            if ([executable isEqual:name]) {
+                return info[i].kp_proc.p_pid;
+            }
             if ([[executable lastPathComponent] isEqual:name]) {
                 return info[i].kp_proc.p_pid;
             }
@@ -51,45 +127,8 @@
     return 0;
 }
 
-- (void)root {
-    uint64_t proc = [self selfproc];
-    uint64_t ucred = kernel_read64(proc + off_p_ucred);
-    kernel_write32(proc + off_p_uid, 0);
-    kernel_write32(proc + off_p_ruid, 0);
-    kernel_write32(proc + off_p_gid, 0);
-    kernel_write32(proc + off_p_rgid, 0);
-    kernel_write32(ucred + off_ucred_cr_uid, 0);
-    kernel_write32(ucred + off_ucred_cr_ruid, 0);
-    kernel_write32(ucred + off_ucred_cr_svuid, 0);
-    kernel_write32(ucred + off_ucred_cr_ngroups, 1);
-    kernel_write32(ucred + off_ucred_cr_groups, 0);
-    kernel_write32(ucred + off_ucred_cr_rgid, 0);
-    kernel_write32(ucred + off_ucred_cr_svgid, 0);
-}
-
-- (void)unsandbox {
-    uint64_t proc = [self selfproc];
-    uint64_t ucred = kernel_read64(proc + off_p_ucred);
-    uint64_t cr_label = kernel_read64(ucred + off_ucred_cr_label);
-    kernel_read64(cr_label + off_sandbox_slot);
-    kernel_write64(cr_label + off_sandbox_slot, 0);
-}
-
 - (void)respring {
     kill([self name_to_pid:@"backboardd"], SIGKILL);
-}
-
-- (bool)go {
-    offs_init();
-    printf("Getting root...\n");
-    [self root];
-    printf("UID: %i\n", getuid());
-    printf("Unsandboxing...\n");
-    [self unsandbox];
-    printf("Unsandboxed: %i\n", (kernel_read64(kernel_read64(kernel_read64([self selfproc] + off_p_ucred) + off_ucred_cr_label) + off_sandbox_slot) == 0) ? 1 : 0);
-    printf("Success!\n");
-    [self disableRevokes];
-    return getuid() ? false : true;
 }
 
 - (void)disableRevokes {

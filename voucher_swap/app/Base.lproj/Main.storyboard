@@ -20,7 +20,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="andre-abreu-1297925-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="KtX-fi-xRL">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5R-Am-y8Z" customClass="RoundedVisualEffectView">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5R-Am-y8Z" customClass="RoundedVisualEffectView" customModule="voucher_swap" customModuleProvider="target">
                                 <rect key="frame" x="68" y="418" width="278" height="70"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kl9-bW-jxz">
                                     <rect key="frame" x="0.0" y="0.0" width="278" height="70"/>
@@ -98,58 +98,13 @@ It uses the anti-revoke method created by Jakeashacks and Pwn20wnd.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JXO-EX-IDz"/>
                     </view>
+                    <connections>
+                        <outlet property="bigButton" destination="LHo-9l-hqt" id="i7F-Ia-qtR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGp-6H-hnX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-636.23188405797111" y="91.071428571428569"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4d-vZ-0pX">
-                                <rect key="frame" x="0.0" y="44" width="414" height="142"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="142" id="hKS-le-Vpq"/>
-                                </constraints>
-                                <string key="text">LazarusJailed by Ignition
-Anti-Revoke method by Jakeashacks &amp; Pwn20wnd
-voucher_swap
-by bazad
-
-fork by alticha</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31T-hi-OPi">
-                                <rect key="frame" x="0.0" y="826" width="414" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="L4i-VR-xko"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="go"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="31T-hi-OPi" secondAttribute="bottom" constant="20" symbolic="YES" id="2JT-8G-9eL"/>
-                            <constraint firstItem="j4d-vZ-0pX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="F2N-Cm-95H"/>
-                            <constraint firstAttribute="trailing" secondItem="j4d-vZ-0pX" secondAttribute="trailing" id="Fcm-k2-jsP"/>
-                            <constraint firstItem="j4d-vZ-0pX" firstAttribute="trailing" secondItem="31T-hi-OPi" secondAttribute="trailing" id="JKj-IH-RYC"/>
-                            <constraint firstItem="j4d-vZ-0pX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SQI-zN-MPD"/>
-                            <constraint firstItem="j4d-vZ-0pX" firstAttribute="leading" secondItem="31T-hi-OPi" secondAttribute="leading" id="TtU-Fr-hao"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="91.304347826086968"/>
         </scene>
     </scenes>
     <resources>

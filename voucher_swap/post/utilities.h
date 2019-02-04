@@ -19,3 +19,4 @@ static inline bool clean_file(const char *file) {
 }
 
 bool ensure_symlink(const char *to, const char *from);
+bool is_symlink(const char *filename);
